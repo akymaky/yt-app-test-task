@@ -1,0 +1,21 @@
+{
+  "name": "test-management-system",
+  "title": "Test Management System",
+  "description": "",
+  "$schema": "https://json.schemastore.org/youtrack-app.json",
+  "vendor": {
+    "name": "AkyMaky",
+    "url": "https://akymaky.me"
+  },
+  "icon": "icon.svg",
+  "widgets": [
+    {
+      "key": "tests-widget",
+      "name": "Tests-Widget",
+      "indexPath": "tests-widget/index.html",
+      "extensionPoint": "MAIN_MENU_ITEM",
+      "iconPath": "tests-widget/widget-icon.svg",
+      "description": ""
+    }
+  ]
+}
