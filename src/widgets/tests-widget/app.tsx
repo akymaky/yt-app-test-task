@@ -25,14 +25,8 @@ const AppComponent: React.FunctionComponent = () => {
 
       const projects = result as Projects;
 
-      // eslint-disable-next-line no-console
-      console.log(projects);
-
       result = await host.fetchApp('backend/enabledProjects', {});
       const enabledProjects = result as string[];
-
-      // eslint-disable-next-line no-console
-      console.log(enabledProjects);
 
       const data = projects.map((p) => ({
         label: p.name,
