@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Project } from "../types/Projects";
-import Checkbox from "@jetbrains/ring-ui-built/components/checkbox/checkbox.js";
 import { HostAPI } from "../../../../@types/globals";
+import Tag, { TagType } from "@jetbrains/ring-ui-built/components/tag/tag.js";
+import { ProjectToggle } from "./ProjectToggle";
 
 type Props = {
   project: Project;
@@ -9,35 +10,20 @@ type Props = {
   host: HostAPI;
 };
 
+function randomEnum<T extends Record<string, unknown>>(anEnum: T): T[keyof T] {
+  const enumValues = Object.values(anEnum) as unknown as T[keyof T][];
+  const randomIndex = Math.floor(Math.random() * enumValues.length);
+  return enumValues[randomIndex];
+}
+
 export function ProjectItem({ project, enabled, host }: Props) {
-  const [isEnabled, setEnabled] = useState(enabled);
-
-  async function toggleEnabled() {
-    const oldStatus = isEnabled
-    const newStatus = !oldStatus;
-    
-    setEnabled(newStatus);
-
-    try {
-      await host.fetchApp('backend/projectStatus', {
-        method: "PUT",
-        body: {
-          project: project.shortName,
-          enabled: newStatus
-        },
-      })
-    }
-    catch {
-      setEnabled(oldStatus)
-    }
-  }
-
   return (
-    <div>
-      <span>
-        {project.shortName} | {project.name}
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <Tag interactive={false} tagType={randomEnum(TagType)}>{project.shortName}</Tag>
+      <span style={{ marginLeft: "12px", flex: 1 }}>
+        {project.name}
       </span>
-      <Checkbox checked={isEnabled} onChange={toggleEnabled}/>
+      <ProjectToggle project={project} enabled={enabled} host={host}/>
     </div>
   );
 }
